@@ -39,7 +39,7 @@ line vty 0 4
  ```
 
 ---
-
+```
 VTP mode server
 vtp domain LA
 
@@ -84,42 +84,85 @@ interface GigabitEthernet1/0/24
 end
 
 write memory
+```
+```
+interface Gigabit 1/0/2
+switchport mode access
+switchport access Vlan 20
+no shutdown
 
-interface Gigabit 3/0
-switchport mode acess
-switchport access V20
+interface Gigabit 1/0/3
+switchport mode access
+switchport access Vlan 30
 no shutdown
 
 
-interface Gigabit 3/1
-switchport mode acess
-switchport access V30
+interface Gigabit 1/0/4
+switchport mode access
+switchport access Vlan 40
 no shutdown
 
-
-interface Gigabit 3/2
-switchport mode acess
-switchport access V40
+interface Gigabit 1/0/5
+switchport mode access
+switchport access Vlan 50
 no shutdown
 
-interface Gigabit 3/3
-switchport mode acess
-switchport access V50
-no shutdown
+```
 
+## DHCP
+```
+enable
+configure terminal
+
+ip dhcp pool VLAN20_POOL
+ network 10.1.20.0 255.255.255.0
+ default-router 10.1.20.1
+ dns-server 10.1.30.100
+ exit
+ip dhcp excluded-address 10.1.20.1 10.1.20.100
+
+ip dhcp pool VLAN30_POOL
+ network 10.1.30.0 255.255.254.0
+ default-router 10.1.30.1
+ dns-server 10.1.30.100
+ exit
+ip dhcp excluded-address 10.1.30.1 10.1.30.100
+
+ip dhcp pool VLAN40_POOL
+ network 10.1.40.0 255.255.254.0
+ default-router 10.1.40.1
+ dns-server 10.1.30.100
+ exit
+ip dhcp excluded-address 10.1.40.1 10.1.40.100
+
+ip dhcp pool VLAN50_POOL
+ network 10.1.50.0 255.255.252.0
+ default-router 10.1.50.1
+ dns-server 10.1.30.100
+ exit
+ip dhcp excluded-address 10.1.50.1 10.1.50.100
+
+end
+copy running-config startup-config
+```
+
+```
 enable
 configure terminal
 
 ip routing 
-router eigrp 1
+router eigrp 100
  router-id 1.1.1.1
  passive-interface default
  no auto-summary
  no passive-interface GigabitEthernet1/0/24
- no passive-interface GigabitEthernet1/1/1
- network 10.100.0.14 0.0.0.3
- network 10.100.0.10 0.0.0.3
- network 10.2.0.0 0.0.255.255
+ network 10.1.100.0
+ network 10.1.10.0
+ network 10.1.20.0
+ network 10.1.30.0
+ network 10.1.40.0
+ network 10.1.50.0
  exit
 
 end
+```
