@@ -19,7 +19,7 @@
 This project is a network simulation that demonstrates the configuration of a multi-site network using GRE (Generic Routing Encapsulation) tunnels for EIGRP (Enhanced Interior Gateway Routing Protocol) implementation between sites. The simulation includes five sites (LA, SD, SF, MI, NY) connected through routers, with additional 3650 switches serving as inter-VLAN routers and participating in EIGRP. EIGRP is employed for efficient routing, and the network setup also involves NAT (Network Address Translation) and GRE tunnels for connectivity between specific sites.
 
 ## Network Topology
-
+![network-topology](./gre.png)
 The network comprises the following components:
 
 
