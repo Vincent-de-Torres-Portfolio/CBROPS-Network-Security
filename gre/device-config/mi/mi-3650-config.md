@@ -96,3 +96,18 @@ no ip dhcp excluded-address 10.4.40.1 10.4.40.100
 no ip dhcp excluded-address 10.4.50.1 10.4.50.100
 no ip dhcp excluded-address 10.4.60.1 10.4.60.100
 no ip dhcp excluded-address 10.4.70.1 10.4.70.100
+
+
+enable
+configure terminal
+
+router eigrp 1
+ eigrp router-id 101.101.101.101
+ passive-interface default
+ no passive-interface GigabitEthernet1/1/1
+ network 10.101.0.0 0.0.0.255
+ redistribute static
+ no auto-summary
+
+exit
+

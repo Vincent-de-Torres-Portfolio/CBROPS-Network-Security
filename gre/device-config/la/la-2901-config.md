@@ -63,3 +63,30 @@ exit
 
 
 ```
+
+# GRE
+enable
+configure terminal
+
+interface Tunnel0
+ description GRE Tunnel to NY
+ ip address 192.168.1.1 255.255.255.252
+ tunnel source Se0/3/0
+ tunnel destination 4.4.2.2 
+ exit
+
+interface Tunnel1
+ description GRE Tunnel to SF
+ ip address 192.168.2.1 255.255.255.252
+ tunnel source Se0/3/0
+ tunnel destination 2.2.3.2
+ exit
+
+interface Tunnel2
+ description GRE Tunnel to SD
+ ip address 192.168.3.1 255.255.255.252
+ tunnel source Serial/0/0
+ tunnel destination 2.2.2.2
+ exit
+
+exit

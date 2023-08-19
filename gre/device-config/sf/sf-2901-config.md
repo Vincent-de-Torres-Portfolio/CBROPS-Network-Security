@@ -61,3 +61,13 @@ router eigrp 1
 exit
 ```
 
+enable
+configure terminal
+
+interface Tunnel1
+ ip address 192.168.2.2 255.255.255.0
+ tunnel source Ser0/3/0
+ tunnel destination 2.2.1.2
+ exit
+
+exit

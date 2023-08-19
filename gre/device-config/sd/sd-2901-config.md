@@ -27,6 +27,9 @@ configure terminal
 
 ! Access list defining the source addresses to be translated
 access-list 1 permit 10.2.0.0 0.0.255.255
+access-list 1 permit 192.168.1.0 0.0.0.3
+access-list 1 permit 192.168.2.0 0.0.0.3
+access-list 1 permit 192.168.3.0 0.0.0.3
 
 ! NAT configuration
 ip nat pool SD-Pool 2.2.2.2 2.2.2.2 netmask 255.255.255.252
@@ -60,4 +63,19 @@ router eigrp 1
 exit
 
 
+```
+
+# GRE
+```
+enable
+configure terminal
+
+interface Tunnel2
+description $GRE Tunnel to LA$
+ip address 192.168.3.2 255.255.255.252
+ tunnel source GigabitEthernet0/0/0
+ tunnel destination 2.2.1.2
+ exit
+
+exit
 ```
