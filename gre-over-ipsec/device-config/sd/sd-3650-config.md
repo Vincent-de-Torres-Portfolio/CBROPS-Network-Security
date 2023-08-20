@@ -44,7 +44,7 @@ interface Vlan50
  exit
 
 ! Configure interface to Main Router
-interface GigabitEthernet1/0/24
+interface GigabitEthernet0/0
  no switchport
  ip address 10.2.100.2 255.255.255.252
  no shutdown
