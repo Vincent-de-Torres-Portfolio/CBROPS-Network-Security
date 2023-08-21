@@ -1,3 +1,7 @@
+# GRE-over-IPSec: SF-3650 &mdash; Device Configuration
+
+## Initial Settings
+
 ```
 
 enable
@@ -56,26 +60,32 @@ vlan 50
 
 
 interface Vlan10
+no shutdown
  ip address 10.3.10.1 255.255.255.0
  exit
 
 interface Vlan20
+no shutdown
+
  ip address 10.3.20.1 255.255.255.0
  exit
 
 interface Vlan30
+no shutdown
  ip address 10.3.30.1 255.255.254.0
  exit
 
 interface Vlan40
+no shutdown
  ip address 10.3.40.1 255.255.254.0
  exit
 
 interface Vlan50
+no shutdown
  ip address 10.3.50.1 255.255.252.0
  exit
 
-interface GigabitEthernet1/0/24
+interface GigabitEthernet0/0
  no switchport
  ip address 10.3.100.2 255.255.255.252
  no shutdown
@@ -86,23 +96,23 @@ end
 write memory
 ```
 ```
-interface Gigabit 1/0/2
+interface Gigabit 0/1
 switchport mode access
 switchport access Vlan 20
 no shutdown
 
-interface Gigabit 1/0/3
+interface Gigabit 0/2
 switchport mode access
 switchport access Vlan 30
 no shutdown
 
 
-interface Gigabit 1/0/4
+interface Gigabit 0/3
 switchport mode access
 switchport access Vlan 40
 no shutdown
 
-interface Gigabit 1/0/5
+interface Gigabit 1/0
 switchport mode access
 switchport access Vlan 50
 no shutdown
@@ -161,11 +171,12 @@ configure terminal
 
 ip routing
 ip route 0.0.0.0 0.0.0.0 10.3.100.1
+
 router eigrp 100
  router-id 3.3.3.3
  passive-interface default
  no auto-summary
- no passive-interface GigabitEthernet1/0/24
+ no passive-interface GigabitEthernet0/0
  network 10.3.100.0
  network 10.3.10.0
  network 10.3.20.0

@@ -1,4 +1,4 @@
-# GRE: SD-3650 - Device Configuration
+# GRE-over-IPSec: SD-3650 &mdash; Device Configuration
 
 ## VTP and VLAN Configuration
 
@@ -57,22 +57,22 @@ write memory
 ## Access Port Configuration
 
 ```plaintext
-interface GigabitEthernet1/0/2
+interface GigabitEthernet0/1
  switchport mode access
  switchport access vlan 20
  no shutdown
 
-interface GigabitEthernet1/0/3
+interface GigabitEthernet0/2
  switchport mode access
  switchport access vlan 30
  no shutdown
 
-interface GigabitEthernet1/0/4
+interface GigabitEthernet0/3
  switchport mode access
  switchport access vlan 40
  no shutdown
 
-interface GigabitEthernet1/0/5
+interface GigabitEthernet1/0
  switchport mode access
  switchport access vlan 50
  no shutdown
@@ -131,10 +131,10 @@ ip routing
 
 ! Configure EIGRP
 router eigrp 100
- router-id 1.1.1.1
+ router-id 2.2.2.2
  passive-interface default
  no auto-summary
- no passive-interface GigabitEthernet1/0/24
+ no passive-interface GigabitEthernet0/0
  network 10.2.100.0
  network 10.2.10.0
  network 10.2.20.0
@@ -144,4 +144,12 @@ router eigrp 100
  exit
 
 end
+```
+
+## Static Default Route
+
+```
+
+ip route 0.0.0.0 0.0.0.0 10.2.100.1
+
 ```

@@ -1,3 +1,4 @@
+# GRE-over-IPSec: NY-3650 &mdash; Device Configuration
 ```
 
 enable
@@ -12,31 +13,31 @@ username admin secret cisco
 
 ! Configure console settings
 line console 0
- logging synchronous
- exit
+logging synchronous
+exit
 
 ! Configure domain name and generate RSA key
 conf t
- ip domain-name NY.synapsetechnologies.com
- crypto key generate rsa general-keys modulus 1024
+ip domain-name NY.synapsetechnologies.com
+crypto key generate rsa general-keys modulus 1024
 
 ! Set banner message and enable secret
 banner motd $Welcome to NY Branch.$
- enable secret cisco
+enable secret cisco
 
 ! Configure console password
 line console 0
- password cisco
- login
- exit
+password cisco
+login
+exit
 
 ! Configure SSH for remote management
 line vty 0 4
- login local
- transport input ssh
- ip ssh version 2
- 
- ```
+login local
+transport input ssh
+ip ssh version 2
+
+```
 
 ---
 ```
@@ -44,67 +45,72 @@ VTP mode server
 vtp domain NY
 
 vlan 10
- name NATIVE
+name NATIVE
 vlan 20
- name MGT
+name MGT
 vlan 30
- name SRV
+name SRV
 vlan 40
- name IT
+name IT
 vlan 50
- name INT
+name INT
 
 
 interface Vlan10
- ip address 10.200.10.1 255.255.255.0
- exit
+no shutdown
+ip address 10.200.10.1 255.255.255.0
+exit
 
 interface Vlan20
- ip address 10.200.20.1 255.255.255.0
- exit
+no shutdown
+ip address 10.200.20.1 255.255.255.0
+exit
 
 interface Vlan30
- ip address 10.200.30.1 255.255.254.0
- exit
+no shutdown
+ip address 10.200.30.1 255.255.254.0
+exit
 
 interface Vlan40
- ip address 10.200.40.1 255.255.254.0
- exit
+no shutdown
+ip address 10.200.40.1 255.255.254.0
+exit
 
 interface Vlan50
- ip address 10.200.50.1 255.255.252.0
- exit
+no shutdown
+ip address 10.200.50.1 255.255.252.0
+exit
 
-interface GigabitEthernet1/0/24
- no switchport
- ip address 10.200.100.2 255.255.255.252
- no shutdown
- exit
+interface GigabitEthernet0/0
+no switchport
+ip address 10.200.100.2 255.255.255.252
+no shutdown
+exit
 
 end
 
 write memory
 ```
 ```
-interface Gigabit 1/0/2
+
+interface GigabitEthernet0/1
 switchport mode access
-switchport access Vlan 20
+switchport access vlan 20
 no shutdown
 
-interface Gigabit 1/0/3
+interface GigabitEthernet0/2
 switchport mode access
-switchport access Vlan 30
+switchport access vlan 30
 no shutdown
 
-
-interface Gigabit 1/0/4
+interface GigabitEthernet0/3
 switchport mode access
-switchport access Vlan 40
+switchport access vlan 40
 no shutdown
 
-interface Gigabit 1/0/5
+interface GigabitEthernet1/0
 switchport mode access
-switchport access Vlan 50
+switchport access vlan 50
 no shutdown
 
 
@@ -124,31 +130,31 @@ enable
 configure terminal
 
 ip dhcp pool VLAN20_POOL
- network 10.200.20.0 255.255.255.0
- default-router 10.200.20.1
- dns-server 10.200.30.100
- exit
+network 10.200.20.0 255.255.255.0
+default-router 10.200.20.1
+dns-server 10.200.30.100
+exit
 ip dhcp excluded-address 10.200.20.1 10.200.20.100
 
 ip dhcp pool VLAN30_POOL
- network 10.200.30.0 255.255.254.0
- default-router 10.200.30.1
- dns-server 10.200.30.100
- exit
+network 10.200.30.0 255.255.254.0
+default-router 10.200.30.1
+dns-server 10.200.30.100
+exit
 ip dhcp excluded-address 10.200.30.1 10.200.30.100
 
 ip dhcp pool VLAN40_POOL
- network 10.200.40.0 255.255.254.0
- default-router 10.200.40.1
- dns-server 10.200.30.100
- exit
+network 10.200.40.0 255.255.254.0
+default-router 10.200.40.1
+dns-server 10.200.30.100
+exit
 ip dhcp excluded-address 10.200.40.1 10.200.40.100
 
 ip dhcp pool VLAN50_POOL
- network 10.200.50.0 255.255.252.0
- default-router 10.200.50.1
- dns-server 10.200.30.100
- exit
+network 10.200.50.0 255.255.252.0
+default-router 10.200.50.1
+dns-server 10.200.30.100
+exit
 ip dhcp excluded-address 10.200.50.1 10.200.50.100
 
 end
@@ -162,17 +168,17 @@ configure terminal
 ip routing
 ip route 0.0.0.0 0.0.0.0 10.200.100.1
 router eigrp 100
- router-id 10.10.10.10
- passive-interface default
- no auto-summary
- no passive-interface GigabitEthernet1/0/24
- network 10.200.100.0
- network 10.200.10.0
- network 10.200.20.0
- network 10.200.30.0
- network 10.200.40.0
- network 10.200.50.0
- exit
+router-id 20.20.20.20
+passive-interface default
+no auto-summary
+no passive-interface GigabitEthernet0/0
+network 10.200.100.0
+network 10.200.10.0
+network 10.200.20.0
+network 10.200.30.0
+network 10.200.40.0
+network 10.200.50.0
+exit
 
 end
 ```

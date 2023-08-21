@@ -1,4 +1,4 @@
-# GRE: LA-3650 - Device Configuration
+# GRE-over-IPSec: LA-3650 &mdash; Device Configuration
 
 ## VTP and VLAN Configuration
 
@@ -44,7 +44,8 @@ interface Vlan50
  exit
 
 ! Configure interface to Main Router
-interface GigabitEthernet1/0/24
+
+interface GigabitEthernet0/0
  no switchport
  ip address 10.1.100.2 255.255.255.252
  no shutdown
@@ -57,22 +58,22 @@ write memory
 ## Access Port Configuration
 
 ```plaintext
-interface GigabitEthernet1/0/2
+interface GigabitEthernet0/1
  switchport mode access
  switchport access vlan 20
  no shutdown
 
-interface GigabitEthernet1/0/3
+interface GigabitEthernet0/2
  switchport mode access
  switchport access vlan 30
  no shutdown
 
-interface GigabitEthernet1/0/4
+interface GigabitEthernet0/3
  switchport mode access
  switchport access vlan 40
  no shutdown
 
-interface GigabitEthernet1/0/5
+interface GigabitEthernet1/0
  switchport mode access
  switchport access vlan 50
  no shutdown
@@ -131,10 +132,10 @@ ip routing
 
 ! Configure EIGRP
 router eigrp 100
- router-id 1.1.1.1
+ eigrp router-id 1.1.1.1
  passive-interface default
  no auto-summary
- no passive-interface GigabitEthernet1/0/24
+ no passive-interface GigabitEthernet0/0
  network 10.1.100.0
  network 10.1.10.0
  network 10.1.20.0
@@ -144,4 +145,12 @@ router eigrp 100
  exit
 
 end
+```
+
+## Static Default Route
+
+```
+
+ip route 0.0.0.0 0.0.0.0 10.1.100.1
+
 ```

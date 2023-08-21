@@ -1,4 +1,4 @@
-# GRE: SD-2901 - Device Configuration
+# GRE-ver-IPSec: SD-2901 &mdash; Device Configuration
 
 ## Interface Configuration
 
@@ -78,3 +78,32 @@ interface Tunnel100
 exit
 ```
 
+## IP-SEC
+
+```
+
+crypto isakmp policy 1
+encr aes
+authentication pre-share
+group 2
+
+crypto isakmp key P@ssw0rd address 2.2.1.2
+
+crypto ipsec transform-set ESP-AES-SHA esp-aes esp-sha-hmac
+
+
+crypto map IPSEC-MAP 20 ipsec-isakmp
+set peer 2.2.1.2
+set transform-set ESP-AES-SHA
+match address GRE-to-IPSEC
+
+
+ip access-list extended GRE-to-IPSEC
+permit gre host 2.2.2.2 host 2.2.1.2
+
+interface GigabitEthernet0/0
+ip address 2.2.1.1 255.255.255.252
+crypto map IPSEC-MAP
+no shutdown
+
+```
