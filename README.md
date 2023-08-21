@@ -1,6 +1,6 @@
 # CyberOps Associate Certification Portfolio | Network Security Projects
 
-![cert-image](assets/imgs/cyberops-associate-cert.png)
+![cert-image](./cert-img.png)
 
 # CyberOps Associate Certification Portfolio
 
